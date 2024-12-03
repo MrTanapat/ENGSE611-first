@@ -1,9 +1,16 @@
 #include <stdio.h>
-#include <unistd.h> /* contains fork prototype */
+#include <unistd.h>
 int main(void)
 {
+int pid;
 printf("Hello World!\n");
-fork( );
-printf("I am after forking\n");
-printf("\tI am process %d.\n", getpid( ));
+printf("I am the parent process and pid is : %d .\n",getpid());
+printf("Here i am before use of forking\n");
+pid = fork();
+printf("Here I am just after forking\n");
+if (pid == 0)
+printf("I am the child process and pid is :%d.\n",getpid());
+else
+printf("I am the parent process and pid is: %d .\n",getpid());
+
 }
