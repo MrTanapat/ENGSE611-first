@@ -1,20 +1,19 @@
 #include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <sys/wait.h>
 main()
 {
-int forkresult;
-printf("%d: I am the parent. Remember my number!\n", getpid());
-printf("%d: I am now going to fork ... \n", getpid());
-forkresult = fork();
-if (forkresult != 0)
-{ /* the parent will execute this code */
-printf("%d: My child's pid is %d\n", getpid(), forkresult);
+int pid ;
+printf("I'am the original process with PID %d and PPID %d.\n", getpid(),
+getppid()) ;
+pid = fork ( ) ; /* Duplicate. Child and parent continue from here */
+if ( pid != 0 ) /* pid is non-zero,so I must be the parent*/
+{
+printf("I'am the parent with PID %d and PPID %d.\n", getpid(), getppid()) ;
+printf("My child's PID is %d\n", pid ) ;
 }
-else /* forkresult == 0 */
-{ /* the child will execute this code */
-printf("%d: Hi! I am the child.\n", getpid());
+else /* pid is zero, so I must be the child */
+{
+sleep(4); /* make sure that the parent terminates first */
+printf("I'm the child with PID %d and PPID %d.\n", getpid(), getppid()) ;
 }
-printf("%d: like father like son. \n", getpid());
+printf ("PID %d terminates.\n", getpid()) ;
 }
