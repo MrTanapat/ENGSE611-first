@@ -1,21 +1,18 @@
 #include <stdio.h>
-#include <sys/wait.h> /* contains prototype for wait */
-int main(void)
+#include <unistd.h>
+#include <stdlib.h>
+#include <sys/wait.h>
+main()
 {
-int pid;
-int status;
-printf("Hello World!\n");
-pid = fork();
-if (pid == -1) /* check for error in fork */
-{
-perror("bad fork");
-exit(1);
+int forkresult;
+printf("%d: I am the parent. Remember my number!\n", getpid());
+printf("%d: I am now going to fork ... \n", getpid());
+forkresult = fork();
+if (forkresult != 0)
+printf("%d: My child's pid is %d\n", getpid(), forkresult);
 }
-if (pid == 0)
-printf("I am the child process.\n");
-else
-{
-wait(&status); /* parent waits for child to finish */
-printf("I am the parent process.\n");
+else /* forkresult == 0 */
+printf("%d: Hi! I am the child.\n", getpid());
 }
+printf("%d: like father like son. \n", getpid());
 }
